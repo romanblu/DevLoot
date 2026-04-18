@@ -5,21 +5,30 @@ alwaysApply: true
 
 # Current feature
 
+**Dashboard UI — Phase 1** (1 of 3). Layout shell and ShadCN setup; match `.cursor/ui-screenshots/main-dashboard.png`.
 
 ## Status
 
-<!-- Not Started | In Progress | Completed -->
+Completed
 
 ## Goals
 
-<!-- Goals and requirements -->
+- Initialize ShadCN UI and install required components.
+- Add a dashboard route at `/dashboard`.
+- Implement the main dashboard layout and any global styles needed for it.
+- Dark mode by default.
+- Top bar with search and a “new item” button (display only; no behavior required yet).
+- Placeholder regions: sidebar and main content areas labeled with `h2` text **Sidebar** and **Main** respectively.
 
 ## Notes
 
-<!-- Any extra notes -->
+- **References:** `.cursor/ui-screenshots/main-dashboard.png`, `.cursor/rules/project-overview.mdc`, `src/lib/mock-data.ts`, `.cursor/features/dashboard-phase-2-spec.md`, `.cursor/features/dashboard-phase-3-spec.md`
+- Later phases are specified in `dashboard-phase-2-spec.md` and `dashboard-phase-3-spec.md`; stay within phase 1 scope unless the focus rule is updated.
 
 ## History
 
 <!-- Keep this updated - earliest to latest -->
 
 - **2026-04-18** — Initial Next.js setup from Create Next App: Next.js 16.2.4, React 19.2.4, TypeScript (strict), Tailwind CSS v4 (`@tailwindcss/postcss`), ESLint (`eslint-config-next` 16.2.4), App Router under `src/app/` with `@/*` → `src/*` path alias; default scripts `dev`, `build`, `start`, `lint`.
+- **2026-04-18** — Started **Dashboard UI Phase 1**: ShadCN init/components, `/dashboard` route, layout and global styles, dark default, top bar (search + new item, display only), sidebar/main `h2` placeholders per `.cursor/features/dashboard-phase-1-spec.md`.
+- **2026-04-18** — Implemented Phase 1 on branch `feature/dashboard-phase-1`: `npx shadcn@latest init` (Radix / Nova preset, Tailwind v4), `button` + `input`, `/dashboard` layout with top bar and placeholders, default `dark` on `<html>`, Geist wired to `--font-sans` / `--font-mono`, violet dark `primary` for CTA alignment with dashboard mock.
