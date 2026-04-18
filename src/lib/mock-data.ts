@@ -1,0 +1,218 @@
+/**
+ * Single source of truth for dashboard UI mock data until the database is implemented.
+ */
+
+export const mockCurrentUser = {
+  id: "user_mock_jay",
+  name: "Jay",
+  email: "jay@example.com",
+  image: null as string | null,
+  initials: "JD",
+  isPro: false,
+};
+
+export const mockItemTypes = [
+  {
+    id: "it_snippet",
+    name: "Snippet",
+    pluralName: "Snippets",
+    icon: "Code",
+    color: "#3b82f6",
+    contentMode: "text",
+    isSystem: true,
+  },
+  {
+    id: "it_prompt",
+    name: "Prompt",
+    pluralName: "Prompts",
+    icon: "Sparkles",
+    color: "#8b5cf6",
+    contentMode: "text",
+    isSystem: true,
+  },
+  {
+    id: "it_command",
+    name: "Command",
+    pluralName: "Commands",
+    icon: "Terminal",
+    color: "#f97316",
+    contentMode: "text",
+    isSystem: true,
+  },
+  {
+    id: "it_note",
+    name: "Note",
+    pluralName: "Notes",
+    icon: "StickyNote",
+    color: "#fde047",
+    contentMode: "text",
+    isSystem: true,
+  },
+  {
+    id: "it_link",
+    name: "Link",
+    pluralName: "Links",
+    icon: "Link",
+    color: "#10b981",
+    contentMode: "url",
+    isSystem: true,
+  },
+  {
+    id: "it_file",
+    name: "File",
+    pluralName: "Files",
+    icon: "File",
+    color: "#6b7280",
+    contentMode: "file",
+    isSystem: true,
+  },
+  {
+    id: "it_image",
+    name: "Image",
+    pluralName: "Images",
+    icon: "Image",
+    color: "#ec4899",
+    contentMode: "file",
+    isSystem: true,
+  },
+];
+
+export const mockCollections = [
+  {
+    id: "col_react_patterns",
+    name: "React patterns",
+    description: "Hooks, composition patterns, and TypeScript-friendly React snippets.",
+    itemCount: 18,
+    dominantItemTypeId: "it_snippet",
+    dominantLabel: "snippets",
+    isFavorite: true,
+    createdAt: "2026-03-02T14:22:00.000Z",
+    updatedAt: "2026-04-10T09:15:00.000Z",
+  },
+  {
+    id: "col_ai_prompts",
+    name: "AI prompts",
+    description: "System prompts, reviewers, and reusable LLM workflows.",
+    itemCount: 11,
+    dominantItemTypeId: "it_prompt",
+    dominantLabel: "prompts",
+    isFavorite: true,
+    createdAt: "2026-03-08T11:40:00.000Z",
+    updatedAt: "2026-04-12T16:03:00.000Z",
+  },
+  {
+    id: "col_interview_prep",
+    name: "Interview prep",
+    description: "Commands, notes, and links for coding interviews and take-homes.",
+    itemCount: 9,
+    dominantItemTypeId: "it_command",
+    dominantLabel: "mixed",
+    isFavorite: false,
+    createdAt: "2026-03-15T18:05:00.000Z",
+    updatedAt: "2026-04-08T12:30:00.000Z",
+  },
+  {
+    id: "col_python_utils",
+    name: "Python utils",
+    description: "Small scripts, stdlib patterns, and everyday Python helpers.",
+    itemCount: 11,
+    dominantItemTypeId: "it_snippet",
+    dominantLabel: "snippets",
+    isFavorite: false,
+    createdAt: "2026-03-20T08:50:00.000Z",
+    updatedAt: "2026-04-14T07:45:00.000Z",
+  },
+  {
+    id: "col_devops_notes",
+    name: "DevOps notes",
+    description: "Docker, CI, deploy checklists, and infra reminders.",
+    itemCount: 6,
+    dominantItemTypeId: "it_note",
+    dominantLabel: "notes",
+    isFavorite: false,
+    createdAt: "2026-04-01T10:12:00.000Z",
+    updatedAt: "2026-04-15T13:20:00.000Z",
+  },
+];
+
+export const mockItems = [
+  {
+    id: "item_useeffect_cleanup",
+    title: "useEffect cleanup hook",
+    itemTypeId: "it_snippet",
+    contentPreview:
+      "let active = true; async function load() { const r = await...",
+    tags: ["react", "hooks", "ts"],
+    isPinned: true,
+    collectionIds: ["col_react_patterns"],
+  },
+  {
+    id: "item_senior_reviewer",
+    title: "Senior dev code reviewer",
+    itemTypeId: "it_prompt",
+    contentPreview:
+      "You are a senior engineer. Review for performance, security, and...",
+    tags: ["ai", "review", "code-quality"],
+    isPinned: false,
+    collectionIds: ["col_ai_prompts"],
+  },
+  {
+    id: "item_docker_multistage",
+    title: "Docker multi-stage build",
+    itemTypeId: "it_command",
+    contentPreview:
+      "docker build --target production -t app:latest . && docker push...",
+    tags: ["docker", "ci", "deploy"],
+    isPinned: false,
+    collectionIds: ["col_devops_notes"],
+  },
+  {
+    id: "item_prisma_migrations",
+    title: "Prisma v7 migration docs",
+    itemTypeId: "it_link",
+    contentPreview:
+      "prisma.io/docs — schema migrations, shadow db, and...",
+    tags: ["prisma", "db", "orm"],
+    isPinned: true,
+    collectionIds: [],
+  },
+  {
+    id: "item_r2_upload",
+    title: "R2 upload gotchas",
+    itemTypeId: "it_note",
+    contentPreview:
+      "CORS per-bucket, not account. Pre-signed URLs expire 1hr. SDK...",
+    tags: ["r2", "cloudflare", "storage"],
+    isPinned: false,
+    collectionIds: ["col_devops_notes"],
+  },
+  {
+    id: "item_fetch_retry",
+    title: "fetch() with retry wrapper",
+    itemTypeId: "it_snippet",
+    contentPreview: "for (let i = 0; i < retries; i++) { try { const r = await...",
+    tags: ["js", "fetch", "utils"],
+    isPinned: false,
+    collectionIds: ["col_python_utils"],
+  },
+  {
+    id: "item_explain_code",
+    title: "Explain this code (beginner)",
+    itemTypeId: "it_prompt",
+    contentPreview:
+      "Explain the following code in plain English for a junior...",
+    tags: ["ai", "explain", "education"],
+    isPinned: true,
+    collectionIds: ["col_ai_prompts", "col_interview_prep"],
+  },
+  {
+    id: "item_git_rebase",
+    title: "Git interactive rebase",
+    itemTypeId: "it_command",
+    contentPreview:
+      "git rebase -i HEAD~5 — squash, reorder, or drop the last 5...",
+    tags: ["git", "rebase", "history"],
+    isPinned: false,
+    collectionIds: ["col_interview_prep"],
+  },
+];
