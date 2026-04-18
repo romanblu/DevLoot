@@ -1,0 +1,25 @@
+---
+description: Active feature—goal, scope, and acceptance criteria for the work in progress (update when focus changes).
+alwaysApply: true
+---
+
+# Current feature
+
+
+## Status
+
+<!-- Not Started | In Progress | Completed -->
+
+## Goals
+
+<!-- Goals and requirements -->
+
+## Notes
+
+<!-- Any extra notes -->
+
+## History
+
+<!-- Keep this updated - earliest to latest -->
+
+- **2026-04-18** — Initial Next.js setup from Create Next App: Next.js 16.2.4, React 19.2.4, TypeScript (strict), Tailwind CSS v4 (`@tailwindcss/postcss`), ESLint (`eslint-config-next` 16.2.4), App Router under `src/app/` with `@/*` → `src/*` path alias; default scripts `dev`, `build`, `start`, `lint`.
