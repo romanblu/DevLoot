@@ -40,12 +40,13 @@ export function DashboardWorkspace({
   );
 
   return (
-    <div className="flex min-h-svh flex-col bg-background text-foreground">
+    <div className="flex h-svh min-h-0 flex-col bg-background text-foreground">
       <DashboardTopBar mobileNavTrigger={mobileNavTrigger} user={nav.user} />
-      <div className="flex min-h-0 flex-1 flex-col md:flex-row">
+      <div className="flex min-h-0 flex-1 flex-col md:flex-row md:min-h-0">
         <aside
           className={cn(
             "hidden min-h-0 shrink-0 flex-col border-sidebar-border border-r bg-sidebar md:flex",
+            "md:sticky md:top-14 md:z-20 md:h-[calc(100svh-3.5rem)] md:max-h-[calc(100svh-3.5rem)] md:self-start",
             "transition-[width] duration-200 ease-out",
             collapsed ? "w-14" : "w-60",
           )}

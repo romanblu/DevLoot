@@ -14,7 +14,7 @@ export function DashboardTopBar({
   user: { name: string; initials: string };
 }) {
   return (
-    <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border bg-background px-3 sm:gap-3 sm:px-4">
+    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-2 border-b border-border bg-background px-3 sm:gap-3 sm:px-4">
       <div className="flex shrink-0 items-center gap-2">
         <Link
           href="/dashboard"

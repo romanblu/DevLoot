@@ -5,27 +5,17 @@ alwaysApply: true
 
 # Current feature
 
-**Spec:** `.cursor/features/dashboard-phase-3-spec.md`
-
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-Phase 3 of 3 for the dashboard UI layout (see spec overview). Match layout to `.cursor/ui-screenshots/main-dashboard.png`. Use data from `src/lib/mock-data.ts` (import directly until a database exists).
-
-**Acceptance (from spec):**
-
-- Main area content to the right of the sidebar (dashboard home)
-- Recent collections section
-- Pinned items section
-- Ten recent items
-- Four stats cards at the top: total items, total collections, favorite items count, favorite collections count (stats not shown in screenshot but required)
+<!-- Set when starting the next feature -->
 
 ## Notes
 
-- Context: `.cursor/rules/project-overview.mdc`; prior phases: `.cursor/features/dashboard-phase-1-spec.md`, `.cursor/features/dashboard-phase-2-spec.md`
+<!-- Optional context for the next feature -->
 
 ## History
 
@@ -34,4 +24,4 @@ Phase 3 of 3 for the dashboard UI layout (see spec overview). Match layout to `.
 - **2026-04-18** — Initial Next.js setup from Create Next App: Next.js 16.2.4, React 19.2.4, TypeScript (strict), Tailwind CSS v4 (`@tailwindcss/postcss`), ESLint (`eslint-config-next` 16.2.4), App Router under `src/app/` with `@/*` → `src/*` path alias; default scripts `dev`, `build`, `start`, `lint`.
 - **2026-04-18** — **Dashboard UI Phase 1** (per `.cursor/features/dashboard-phase-1-spec.md`): ShadCN UI init (Radix / Nova, Tailwind v4), `button` + `input`, `/dashboard` route with layout (dark default on `<html>`, top bar with read-only search and “+ New item”, `h2` placeholders **Sidebar** / **Main**), Geist as `--font-sans` / `--font-mono`, violet dark `primary` for CTA. Work landed on `main` via fast-forward merge; branch `feature/dashboard-phase-1` removed after push.
 - **2026-04-18** — **Dashboard UI Phase 2 completed** (per `.cursor/features/dashboard-phase-2-spec.md`): Collapsible desktop sidebar with rail mode; mobile **Sheet** drawer; sidebar **Types** + **Collections** (in-sidebar collapsible list, default expanded, chevron to minimize; rail flyout for collections); item-type links to `/items/{plural}` with PRO lock for Files/Images; collection links and stubs at `/collections/[id]`; `getDashboardNavModel()` / `src/lib/mock-data.ts`; top bar: **DevLoot** logo left, search center, **+ New item** + initials right; **hamburger** (`md:hidden`) for drawer; **collapse/expand** control at top of desktop sidebar (`variant` + `onToggleCollapse`); footer rows **Favorites** / **Recently used** / **Settings** (`/settings` stub). Collections navbar dropdown was tried then removed in favor of sidebar-only collections. Prior “current focus” line for Phase 2 superseded by this completion entry.
-- **2026-04-18** — **Current focus:** Dashboard UI Phase 3 per `.cursor/features/dashboard-phase-3-spec.md` (main area: stats row, recent collections, pinned items, 10 recent items).
+- **2026-04-18** — **Dashboard UI Phase 3 completed** (per `.cursor/features/dashboard-phase-3-spec.md`): Main dashboard home in `DashboardHomeView` + `getDashboardHomeData()` (`src/lib/dashboard-home.ts`)—time-based greeting, summary line, **four stat cards** (items, collections, favorite items via membership in favorite collections, favorite collections count), **Collections** horizontal-style grid (sorted by `updatedAt`, dashed “+ New collection” tile), **Pinned** and **Recent items** grids (type-colored accents, tags, links to collections where applicable); `/dashboard` page wired to the view; **five extra mock items** in `src/lib/mock-data.ts` so ten non-pinned “recent” rows are populated. Prior “current focus” line for Phase 3 superseded by this completion entry.
