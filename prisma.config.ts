@@ -1,5 +1,20 @@
-import "dotenv/config";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { config as loadEnv } from "dotenv";
 import { defineConfig } from "prisma/config";
+
+// Prisma may load this file with a cwd that is not the repo root; `.env` lives next to this file.
+const configDir = path.dirname(fileURLToPath(import.meta.url));
+for (const envPath of [
+  path.join(configDir, ".env"),
+  path.join(process.cwd(), ".env"),
+]) {
+  if (fs.existsSync(envPath)) {
+    loadEnv({ path: envPath, override: true });
+    break;
+  }
+}
 
 /**
  * Neon: use a direct (non-pooled) URL for Prisma CLI (`migrate`, `db execute`, etc.).
