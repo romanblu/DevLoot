@@ -15,6 +15,7 @@ model User {
   email                String?   @unique
   emailVerified        DateTime?
   image                String?
+  passwordHash         String?
   isPro                Boolean   @default(false)
   stripeCustomerId     String?   @unique
   stripeSubscriptionId String?   @unique
