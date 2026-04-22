@@ -7,11 +7,13 @@ alwaysApply: true
 
 ## Status
 
-Completed
+In progress
 
 ## Goals
 
-<!-- Set when starting the next feature -->
+- Implement `.cursor/features/dashboard-collections-spec.md`
+- Replace dashboard’s mock collections with Prisma/Neon-backed collections data
+- Preserve current dashboard collections UI; no items-under-collections yet
 
 ## Notes
 
@@ -27,3 +29,4 @@ Completed
 - **2026-04-18** — **Dashboard UI Phase 3 completed** (per `.cursor/features/dashboard-phase-3-spec.md`): Main dashboard home in `DashboardHomeView` + `getDashboardHomeData()` (`src/lib/dashboard-home.ts`)—time-based greeting, summary line, **four stat cards** (items, collections, favorite items via membership in favorite collections, favorite collections count), **Collections** horizontal-style grid (sorted by `updatedAt`, dashed “+ New collection” tile), **Pinned** and **Recent items** grids (type-colored accents, tags, links to collections where applicable); `/dashboard` page wired to the view; **five extra mock items** in `src/lib/mock-data.ts` so ten non-pinned “recent” rows are populated. Prior “current focus” line for Phase 3 superseded by this completion entry.
 - **2026-04-18** — **Database layer completed** (branch `feature/database-prisma-neon`, per `.cursor/features/database-spec.md`): Prisma **7.7** with `prisma-client` generator → `generated/prisma`, `prisma.config.ts` + `dotenv`, `PrismaPg` adapter in `src/lib/prisma.ts`, initial migration `20260418190000_init`, npm scripts `db:*` and `build` runs `prisma generate`, `.env.example` for Neon pooled vs `DIRECT_DATABASE_URL`; `/generated` gitignored; schema from draft models in `.cursor/rules/project-overview.mdc` plus NextAuth tables, indexes and `onDelete` cascades.
 - **2026-04-19** — **Seed data completed** (per `.cursor/features/seed-spec.md`): migration `20260419103000_add_user_password_hash` adds optional **`User.passwordHash`**; **`bcryptjs`** (12 rounds) for demo login **`demo@devloot.io`** / **`12345678`** (`user_seed_demo_devloot` on first create); **`prisma/seed.ts`** upserts **7** system item types from `mockItemTypes`, **5** collections, **18** items with **`ItemCollection`** links; DevOps/Design use real doc URLs; idempotent **`npm run db:seed`**.
+- **2026-04-22** — **Dashboard collections** set as current focus (per `.cursor/features/dashboard-collections-spec.md`): wire dashboard collections grid to Prisma/Neon-backed data; preserve UI; defer items-under-collections.

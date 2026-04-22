@@ -1,42 +1,16 @@
+import { mockItemTypes, mockItems } from "@/lib/mock-data";
 import {
-  mockCollections,
-  mockCurrentUser,
-  mockItemTypes,
-  mockItems,
-} from "@/lib/mock-data";
+  getDashboardGreeting,
+  getDashboardLastUsedTitle,
+  getDashboardStats,
+  getRecentDashboardCollections,
+} from "@/lib/db/collections";
 
-function greetingForHour(hour: number) {
-  if (hour < 12) return "Good morning";
-  if (hour < 17) return "Good afternoon";
-  return "Good evening";
+function pluralizeTypeLabel(typeName: string) {
+  return `${typeName.toLowerCase()}s`;
 }
 
-export function getDashboardHomeData() {
-  const hour = new Date().getHours();
-  const greeting = `${greetingForHour(hour)}, ${mockCurrentUser.name}`;
-
-  const totalItems = mockItems.length;
-  const totalCollections = mockCollections.length;
-  const favoriteCollectionsCount = mockCollections.filter(
-    (c) => c.isFavorite,
-  ).length;
-
-  const favoriteCollectionIds = new Set(
-    mockCollections.filter((c) => c.isFavorite).map((c) => c.id),
-  );
-  const favoriteItemIds = new Set<string>();
-  for (const item of mockItems) {
-    if (item.collectionIds.some((id) => favoriteCollectionIds.has(id))) {
-      favoriteItemIds.add(item.id);
-    }
-  }
-  const favoriteItemsCount = favoriteItemIds.size;
-
-  const recentCollections = [...mockCollections].sort(
-    (a, b) =>
-      new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
-  );
-
+export async function getDashboardHomeData() {
   const pinnedItems = mockItems.filter((i) => i.isPinned);
   const recentItems = [...mockItems]
     .filter((i) => !i.isPinned)
@@ -45,18 +19,36 @@ export function getDashboardHomeData() {
 
   const itemTypeById = new Map(mockItemTypes.map((t) => [t.id, t]));
 
-  const lastUsedTitle =
-    recentItems[0]?.title ?? pinnedItems[0]?.title ?? "—";
+  const [greeting, stats, recentCollectionsRaw, lastUsedTitle] =
+    await Promise.all([
+      getDashboardGreeting(),
+      getDashboardStats(),
+      getRecentDashboardCollections(),
+      getDashboardLastUsedTitle(),
+    ]);
+
+  const recentCollections = recentCollectionsRaw.map((c) => {
+    const dominantType = c.dominantItemTypeId
+      ? itemTypeById.get(c.dominantItemTypeId)
+      : undefined;
+
+    const dominantLabel =
+      c.types.length === 0
+        ? "—"
+        : c.types.length === 1 && dominantType
+          ? pluralizeTypeLabel(dominantType.name)
+          : "mixed";
+
+    return {
+      ...c,
+      dominantLabel,
+    };
+  });
 
   return {
     greeting,
-    stats: {
-      totalItems,
-      totalCollections,
-      favoriteItemsCount,
-      favoriteCollectionsCount,
-    },
-    summaryLine: `${totalItems} items · ${totalCollections} collections · last used: ${lastUsedTitle}`,
+    stats,
+    summaryLine: `${stats.totalItems} items · ${stats.totalCollections} collections · last used: ${lastUsedTitle}`,
     recentCollections,
     pinnedItems,
     recentItems,
@@ -64,6 +56,6 @@ export function getDashboardHomeData() {
   };
 }
 
-export type DashboardHomeData = ReturnType<typeof getDashboardHomeData>;
+export type DashboardHomeData = Awaited<ReturnType<typeof getDashboardHomeData>>;
 export type DashboardHomeItem = DashboardHomeData["recentItems"][number];
 export type DashboardHomeCollection = DashboardHomeData["recentCollections"][number];

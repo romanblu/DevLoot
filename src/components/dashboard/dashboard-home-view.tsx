@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Folder, Star } from "lucide-react";
 
+import { ItemTypeIcon } from "@/components/dashboard/item-type-icon";
 import type {
   DashboardHomeCollection,
   DashboardHomeItem,
@@ -58,12 +59,32 @@ function CollectionCard({
           style={{ color: accent }}
           aria-hidden
         />
-        {collection.isFavorite ? (
-          <Star
-            className="size-4 shrink-0 fill-amber-400 text-amber-400"
-            aria-label="Favorite collection"
-          />
-        ) : null}
+        <div className="flex items-center gap-2">
+          {collection.types.length ? (
+            <div className="flex items-center -space-x-1.5">
+              {collection.types.map((t) => {
+                const type = mockItemTypes.find((x) => x.id === t.itemTypeId);
+                if (!type) return null;
+                return (
+                  <span
+                    key={t.itemTypeId}
+                    className="flex size-6 items-center justify-center rounded-md border border-border/60 bg-card/60 shadow-sm"
+                    style={{ color: type.color }}
+                    title={`${type.name} (${t.count})`}
+                  >
+                    <ItemTypeIcon name={type.icon} className="size-3.5" />
+                  </span>
+                );
+              })}
+            </div>
+          ) : null}
+          {collection.isFavorite ? (
+            <Star
+              className="size-4 shrink-0 fill-amber-400 text-amber-400"
+              aria-label="Favorite collection"
+            />
+          ) : null}
+        </div>
       </div>
       <p className="mt-2 font-semibold text-foreground leading-snug">
         {collection.name}
@@ -138,8 +159,8 @@ function ItemCard({
   );
 }
 
-export function DashboardHomeView() {
-  const data = getDashboardHomeData();
+export async function DashboardHomeView() {
+  const data = await getDashboardHomeData();
 
   return (
     <div className="mx-auto max-w-6xl space-y-10">
@@ -183,7 +204,11 @@ export function DashboardHomeView() {
             <CollectionCard
               key={c.id}
               collection={c}
-              dominant={data.itemTypeById.get(c.dominantItemTypeId)}
+              dominant={
+                c.dominantItemTypeId
+                  ? data.itemTypeById.get(c.dominantItemTypeId)
+                  : undefined
+              }
             />
           ))}
           <div
