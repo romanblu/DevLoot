@@ -17,7 +17,7 @@ export interface DashboardCollectionRow {
   types: DashboardCollectionTypeSummary[];
 }
 
-async function resolveDashboardUserId() {
+export async function resolveDashboardUserId() {
   const demo = await prisma.user.findUnique({
     where: { email: "demo@devloot.io" },
     select: { id: true },

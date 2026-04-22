@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { mockItemTypes } from "@/lib/mock-data";
+import { getItemTypeBySlug } from "@/lib/db/items";
 
 export default async function ItemsByTypePage({
   params,
@@ -10,10 +10,7 @@ export default async function ItemsByTypePage({
   params: Promise<{ type: string }>;
 }) {
   const { type } = await params;
-  const decoded = decodeURIComponent(type).toLowerCase();
-  const itemType = mockItemTypes.find(
-    (t) => t.pluralName.toLowerCase() === decoded,
-  );
+  const itemType = await getItemTypeBySlug({ slug: type });
 
   if (!itemType) {
     notFound();

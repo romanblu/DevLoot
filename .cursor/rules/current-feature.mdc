@@ -11,9 +11,9 @@ In progress
 
 ## Goals
 
-- Implement `.cursor/features/dashboard-collections-spec.md`
-- Replace dashboard’s mock collections with Prisma/Neon-backed collections data
-- Preserve current dashboard collections UI; no items-under-collections yet
+- Implement `.cursor/features/stats-sidebar-spec.md`
+- Replace dashboard’s remaining mock stats + navigation data with Prisma/Neon-backed data
+- Preserve current dashboard design/layout while making it DB-driven
 
 ## Notes
 

@@ -7,7 +7,8 @@ import { DashboardSidebarCollections } from "@/components/dashboard/dashboard-si
 import { ItemTypeIcon } from "@/components/dashboard/item-type-icon";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { isProItemTypeId, type DashboardNavModel } from "@/lib/dashboard-nav";
+import { isProItemTypeId } from "@/lib/item-types";
+import type { DashboardNavModel } from "@/lib/dashboard-nav";
 
 export interface DashboardSidebarContentProps {
   nav: DashboardNavModel;

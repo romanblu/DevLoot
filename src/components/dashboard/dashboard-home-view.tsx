@@ -1,16 +1,18 @@
 import Link from "next/link";
-import { Folder, Star } from "lucide-react";
+import { Star } from "lucide-react";
 
 import { ItemTypeIcon } from "@/components/dashboard/item-type-icon";
 import type {
   DashboardHomeCollection,
+  DashboardHomeData,
   DashboardHomeItem,
 } from "@/lib/dashboard-home";
 import { getDashboardHomeData } from "@/lib/dashboard-home";
-import { mockItemTypes } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
-type ItemType = (typeof mockItemTypes)[number];
+type ItemType = DashboardHomeData["itemTypeById"] extends Map<string, infer V>
+  ? V
+  : never;
 
 function StatCard({
   label,
@@ -34,9 +36,11 @@ function StatCard({
 function CollectionCard({
   collection,
   dominant,
+  itemTypeById,
 }: {
   collection: DashboardHomeCollection;
   dominant: ItemType | undefined;
+  itemTypeById: DashboardHomeData["itemTypeById"];
 }) {
   const accent = dominant?.color ?? "#6b7280";
 
@@ -54,16 +58,16 @@ function CollectionCard({
         aria-hidden
       />
       <div className="flex items-start justify-between gap-2">
-        <Folder
-          className="size-5 shrink-0"
-          style={{ color: accent }}
+        <span
+          className="mt-0.5 size-3.5 shrink-0 rounded-full"
+          style={{ backgroundColor: accent }}
           aria-hidden
         />
         <div className="flex items-center gap-2">
           {collection.types.length ? (
             <div className="flex items-center -space-x-1.5">
               {collection.types.map((t) => {
-                const type = mockItemTypes.find((x) => x.id === t.itemTypeId);
+                const type = itemTypeById.get(t.itemTypeId);
                 if (!type) return null;
                 return (
                   <span
@@ -209,6 +213,7 @@ export async function DashboardHomeView() {
                   ? data.itemTypeById.get(c.dominantItemTypeId)
                   : undefined
               }
+              itemTypeById={data.itemTypeById}
             />
           ))}
           <div

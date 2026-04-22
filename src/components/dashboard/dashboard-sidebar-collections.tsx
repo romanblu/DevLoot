@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronDown, Folder } from "lucide-react";
+import { ChevronDown, Star } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import type { DashboardNavModel } from "@/lib/dashboard-nav";
@@ -46,14 +46,20 @@ function CollectionLinks({
                 "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
               )}
             >
-              <Folder
-                className="size-4 shrink-0"
-                style={{ color }}
+              <span
+                className="size-2.5 shrink-0 rounded-full"
+                style={{ backgroundColor: color }}
                 aria-hidden
               />
               <span className="min-w-0 flex-1 truncate font-medium">
                 {c.name}
               </span>
+              {c.isFavorite ? (
+                <Star
+                  className="size-3.5 shrink-0 fill-amber-400 text-amber-400"
+                  aria-label="Favorite collection"
+                />
+              ) : null}
               <span className="shrink-0 text-muted-foreground text-xs tabular-nums">
                 {c.itemCount}
               </span>
@@ -92,7 +98,7 @@ export function DashboardSidebarCollections({
           aria-expanded={listOpen}
           onClick={() => setListOpen((o) => !o)}
         >
-          <Folder className="size-5" aria-hidden />
+          <span className="size-5 rounded-md border border-border/60 bg-card/40" aria-hidden />
         </Button>
         {listOpen ? (
           <div
@@ -108,6 +114,18 @@ export function DashboardSidebarCollections({
               onNavigate={onNavigate}
               onPick={() => setListOpen(false)}
             />
+            <div className="mt-1 px-2 pr-3">
+              <Link
+                href="/collections"
+                onClick={() => {
+                  setListOpen(false);
+                  onNavigate?.();
+                }}
+                className="block rounded-md px-2 py-2 text-muted-foreground text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+              >
+                View all collections
+              </Link>
+            </div>
           </div>
         ) : null}
       </div>
@@ -145,6 +163,15 @@ export function DashboardSidebarCollections({
             itemTypes={itemTypes}
             onNavigate={onNavigate}
           />
+          <div className="mt-1">
+            <Link
+              href="/collections"
+              onClick={onNavigate}
+              className="block rounded-md px-2 py-2 text-muted-foreground text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+            >
+              View all collections
+            </Link>
+          </div>
         </div>
       ) : null}
     </div>
