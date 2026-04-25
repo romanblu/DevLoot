@@ -62,3 +62,19 @@ Review AI-generated code periodically, especially for:
 - Performance (unnecessary re-renders, N+1 queries)
 - Logic errors (edge cases)
 - Patterns (matches existing codebase?)
+
+## Neon MCP (database safety defaults)
+
+When using the Neon MCP server/tools (Cursor plugin `neon-postgres`):
+
+- Always target the **DevLoot** Neon project:
+  - Project name: `devloot`
+  - Project ID: `mute-shape-23208741`
+- Always target the **development** branch by default:
+  - Branch name: `development`
+  - Branch ID: `br-aged-pond-amr5l3b2`
+- **Never** read from, write to, migrate, reset, delete, or otherwise interact with the **production** branch:
+  - Branch name: `production`
+  - Branch ID: `br-royal-bar-am37ya6v`
+
+If a Neon MCP tool call accepts `projectId` and/or `branchId`, always pass the IDs above explicitly (do not rely on “default branch”). If a request appears to require production data, stop and ask for an explicit override to this rule first.
