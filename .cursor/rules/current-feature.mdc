@@ -11,13 +11,26 @@ In progress
 
 ## Goals
 
-- Implement `.cursor/features/stats-sidebar-spec.md`
-- Replace dashboard’s remaining mock stats + navigation data with Prisma/Neon-backed data
-- Preserve current dashboard design/layout while making it DB-driven
+- Implement `.cursor/features/auth-phase-1-spec.md` (NextAuth v5 + GitHub OAuth)
+- Use Prisma adapter with split config pattern for edge compatibility
+- Protect `/dashboard/*` routes via `src/proxy.ts` redirecting unauthenticated users to sign-in
 
 ## Notes
 
-<!-- Optional context for the next feature -->
+- **Overview**: Set up NextAuth v5 with Prisma adapter and GitHub OAuth. Use NextAuth default pages for testing.
+- **Files to create**:
+  - `src/auth.config.ts` (edge-compatible providers only; no adapter)
+  - `src/auth.ts` (full config + Prisma adapter; session strategy `jwt`)
+  - `src/app/api/auth/[...nextauth]/route.ts` (export handlers from `src/auth.ts`)
+  - `src/proxy.ts` (route protection + redirect logic)
+  - `src/types/next-auth.d.ts` (extend Session with `user.id`)
+- **Environment variables**:
+  - `AUTH_SECRET`
+  - `AUTH_GITHUB_ID`
+  - `AUTH_GITHUB_SECRET`
+- **Testing checklist**:
+  - Visit `/dashboard` → redirects to sign-in
+  - Sign in with GitHub → redirects back to `/dashboard`
 
 ## History
 
@@ -30,3 +43,4 @@ In progress
 - **2026-04-18** — **Database layer completed** (branch `feature/database-prisma-neon`, per `.cursor/features/database-spec.md`): Prisma **7.7** with `prisma-client` generator → `generated/prisma`, `prisma.config.ts` + `dotenv`, `PrismaPg` adapter in `src/lib/prisma.ts`, initial migration `20260418190000_init`, npm scripts `db:*` and `build` runs `prisma generate`, `.env.example` for Neon pooled vs `DIRECT_DATABASE_URL`; `/generated` gitignored; schema from draft models in `.cursor/rules/project-overview.mdc` plus NextAuth tables, indexes and `onDelete` cascades.
 - **2026-04-19** — **Seed data completed** (per `.cursor/features/seed-spec.md`): migration `20260419103000_add_user_password_hash` adds optional **`User.passwordHash`**; **`bcryptjs`** (12 rounds) for demo login **`demo@devloot.io`** / **`12345678`** (`user_seed_demo_devloot` on first create); **`prisma/seed.ts`** upserts **7** system item types from `mockItemTypes`, **5** collections, **18** items with **`ItemCollection`** links; DevOps/Design use real doc URLs; idempotent **`npm run db:seed`**.
 - **2026-04-22** — **Dashboard collections** set as current focus (per `.cursor/features/dashboard-collections-spec.md`): wire dashboard collections grid to Prisma/Neon-backed data; preserve UI; defer items-under-collections.
+- **2026-04-25** — **Auth Phase 1** set as current focus (per `.cursor/features/auth-phase-1-spec.md`): NextAuth v5 + GitHub OAuth with Prisma adapter; split config for edge compatibility; protect `/dashboard/*` via `src/proxy.ts` redirecting unauthenticated users to sign-in. Work started on branch `feature/auth-phase-1`.
