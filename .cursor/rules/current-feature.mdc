@@ -11,26 +11,28 @@ In progress
 
 ## Goals
 
-- Implement `.cursor/features/auth-phase-1-spec.md` (NextAuth v5 + GitHub OAuth)
-- Use Prisma adapter with split config pattern for edge compatibility
-- Protect `/dashboard/*` routes via `src/proxy.ts` redirecting unauthenticated users to sign-in
+- Implement `.cursor/features/auth-phase-2-spec.md` (email/password Credentials provider + registration)
+- Add `POST /api/auth/register` (create user, bcrypt hash, handle conflicts)
+- Keep split-config pattern: placeholder Credentials provider in `src/auth.config.ts`, real validation override in `src/auth.ts`
 
 ## Notes
 
-- **Overview**: Set up NextAuth v5 with Prisma adapter and GitHub OAuth. Use NextAuth default pages for testing.
-- **Files to create**:
-  - `src/auth.config.ts` (edge-compatible providers only; no adapter)
-  - `src/auth.ts` (full config + Prisma adapter; session strategy `jwt`)
-  - `src/app/api/auth/[...nextauth]/route.ts` (export handlers from `src/auth.ts`)
-  - `src/proxy.ts` (route protection + redirect logic)
-  - `src/types/next-auth.d.ts` (extend Session with `user.id`)
-- **Environment variables**:
-  - `AUTH_SECRET`
-  - `AUTH_GITHUB_ID`
-  - `AUTH_GITHUB_SECRET`
+- **Overview**: Add Credentials provider for email/password authentication, plus a registration endpoint.
+- **Auth requirements**:
+  - Use `bcryptjs` for hashing/validation
+  - `User.passwordHash` is already in Prisma schema (migration not needed)
+  - Keep GitHub OAuth working
+- **Registration endpoint**: `POST /api/auth/register`
+  - Accept `name`, `email`, `password`, `confirmPassword`
+  - Validate passwords match
+  - Check if user exists
+  - Hash password and create user
+  - Return success/error JSON
 - **Testing checklist**:
-  - Visit `/dashboard` → redirects to sign-in
-  - Sign in with GitHub → redirects back to `/dashboard`
+  - Register via curl
+  - Go to `/api/auth/signin` and sign in with email/password
+  - Verify redirect to `/dashboard`
+  - Verify GitHub OAuth still works
 
 ## History
 
@@ -44,3 +46,4 @@ In progress
 - **2026-04-19** — **Seed data completed** (per `.cursor/features/seed-spec.md`): migration `20260419103000_add_user_password_hash` adds optional **`User.passwordHash`**; **`bcryptjs`** (12 rounds) for demo login **`demo@devloot.io`** / **`12345678`** (`user_seed_demo_devloot` on first create); **`prisma/seed.ts`** upserts **7** system item types from `mockItemTypes`, **5** collections, **18** items with **`ItemCollection`** links; DevOps/Design use real doc URLs; idempotent **`npm run db:seed`**.
 - **2026-04-22** — **Dashboard collections** set as current focus (per `.cursor/features/dashboard-collections-spec.md`): wire dashboard collections grid to Prisma/Neon-backed data; preserve UI; defer items-under-collections.
 - **2026-04-25** — **Auth Phase 1** set as current focus (per `.cursor/features/auth-phase-1-spec.md`): NextAuth v5 + GitHub OAuth with Prisma adapter; split config for edge compatibility; protect `/dashboard/*` via `src/proxy.ts` redirecting unauthenticated users to sign-in. Work started on branch `feature/auth-phase-1`.
+- **2026-04-25** — **Auth Phase 2** set as current focus (per `.cursor/features/auth-phase-2-spec.md`): add email/password Credentials provider + `POST /api/auth/register` using bcrypt. Work started on branch `feature/auth-phase-2`.
